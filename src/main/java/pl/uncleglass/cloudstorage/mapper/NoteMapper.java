@@ -1,9 +1,6 @@
 package pl.uncleglass.cloudstorage.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import pl.uncleglass.cloudstorage.model.Note;
 
 import java.util.List;
@@ -18,4 +15,7 @@ public interface NoteMapper {
 
     @Select("SELECT * FROM NOTES WHERE userid = #{userId}")
     List<Note> selectNotes(int userId);
+
+    @Update("UPDATE NOTES SET notetitle = #{noteTitle}, notedescription = #{noteDescription} WHERE noteid = #{noteId}")
+    int update(Note note);
 }
