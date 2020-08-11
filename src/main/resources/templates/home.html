@@ -41,9 +41,6 @@
                         </div>
                     </div>
                 </form>
-                <div th:if="${fileUploadSuccess}" class="alert alert-success">
-                    File was uploaded successfully!!
-                </div>
                 <div th:if="${fileUploadEmpty}" class="alert alert-info">
                     You have not selected a file or your file is empty. Please select a file.
                 </div>
@@ -61,7 +58,7 @@
                         <tr th:each="file : ${files}">
                             <td>
                                 <a th:href="*{'/files/' + file.getFileId()}"  target="_blank" class="btn btn-success">Download</a>
-                                <a class="btn btn-danger">Delete</a>
+                                <a th:href="*{'/files/delete/' + file.getFileId()}" class="btn btn-danger">Delete</a>
                             </td>
                             <td th:text="${file.getFilename()}"></td>
                             <td th:text="${file.getContentType()}"></td>

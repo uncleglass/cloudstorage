@@ -22,6 +22,10 @@ public class FileService {
         return fileMapper.select(fileId);
     }
 
+    public boolean isExist(int fileId) {
+        return getFile(fileId) != null;
+    }
+
     public List<File> getFiles() {
         return fileMapper.selectAll();
     }
@@ -44,5 +48,9 @@ public class FileService {
             return size / 1024 + " KB";
         }
         return size + " B";
+    }
+
+    public void deleteFile(int fileId) {
+        fileMapper.delete(fileId);
     }
 }

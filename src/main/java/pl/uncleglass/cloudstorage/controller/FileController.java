@@ -39,6 +39,14 @@ public class FileController {
                 .body(resource);
     }
 
+    @GetMapping("/delete/{fileId}")
+    public String deleteFile(@PathVariable Integer fileId) {
+        if (fileService.isExist(fileId)) {
+            fileService.deleteFile(fileId);
+        }
+        return "redirect:/home";
+    }
+
     @PostMapping
     public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile,
                              Authentication authentication,
@@ -49,7 +57,6 @@ public class FileController {
         }
         User user = userService.getUser(authentication.getName());
         fileService.uploadFile(multipartFile, user.getUserId());
-        redirectAttributes.addFlashAttribute("fileUploadSuccess", true);
         return "redirect:/home";
     }
 }
