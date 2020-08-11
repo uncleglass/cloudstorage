@@ -51,17 +51,21 @@
                     <table class="table table-striped" id="fileTable">
                         <thead>
                         <tr>
-                            <th style="width: 20%" scope="col"></th>
-                            <th style="width: 80%" scope="col">File Name</th>
+                            <th style="width: 15%" scope="col"></th>
+                            <th style="width: 55%" scope="col">File Name</th>
+                            <th style="width: 20%" scope="col">File Content</th>
+                            <th style="width: 10%" scope="col">File Size</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
+                        <tr th:each="file : ${files}">
                             <td>
                                 <a target="_blank" class="btn btn-success">View</a>
                                 <a class="btn btn-danger">Delete</a>
                             </td>
-                            <th scope="row">ExampleFile.txt</th>
+                            <td th:text="${file.getFilename()}"></td>
+                            <td th:text="${file.getContentType()}"></td>
+                            <td th:text="${file.getFileSize()}"></td>
                         </tr>
                         </tbody>
                     </table>

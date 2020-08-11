@@ -6,6 +6,7 @@ import pl.uncleglass.cloudstorage.mapper.FileMapper;
 import pl.uncleglass.cloudstorage.model.File;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -15,13 +16,27 @@ public class FileService {
         this.fileMapper = fileMapper;
     }
 
+    public List<File> getFiles() {
+        return fileMapper.selectAll();
+    }
+
     public int uploadFile(MultipartFile multipartFile, int userId) throws IOException {
         File file = new File();
-        file.setFilename(multipartFile.getName());
+        file.setFilename(multipartFile.getOriginalFilename());
         file.setContentType(multipartFile.getContentType());
-        file.setFileSize(Long.toString(multipartFile.getSize()));
+        file.setFileSize(convertSize(multipartFile.getSize()));
         file.setUserId(userId);
         file.setFileData(multipartFile.getBytes());
         return fileMapper.insert(file);
+    }
+
+    private String convertSize(Long size) {
+        if (size > 1_048_576) {
+            return size / 1048576 + " MB";
+        }
+        if (size > 1_023) {
+            return size / 1024 + " KB";
+        }
+        return size + " B";
     }
 }
