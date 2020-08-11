@@ -22,12 +22,13 @@ public class FileService {
         return fileMapper.select(fileId);
     }
 
-    public boolean isExist(int fileId) {
-        return getFile(fileId) != null;
+    public boolean isDeletingAllowed(int fileId, int userId) {
+        File file = getFile(fileId);
+        return file!=null && file.getUserId()==userId;
     }
 
-    public List<File> getFiles() {
-        return fileMapper.selectAll();
+    public List<File> getFiles(int userId) {
+        return fileMapper.selectAll(userId);
     }
 
     public int uploadFile(MultipartFile multipartFile, int userId) throws IOException {

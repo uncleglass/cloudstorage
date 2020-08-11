@@ -40,8 +40,8 @@ public class FileController {
     }
 
     @GetMapping("/delete/{fileId}")
-    public String deleteFile(@PathVariable Integer fileId) {
-        if (fileService.isExist(fileId)) {
+    public String deleteFile(@PathVariable Integer fileId, Authentication authentication) {
+        if (fileService.isDeletingAllowed(fileId, userService.getAuthenticatedUsersId(authentication))) {
             fileService.deleteFile(fileId);
         }
         return "redirect:/home";
@@ -55,8 +55,7 @@ public class FileController {
             redirectAttributes.addFlashAttribute("fileUploadEmpty", true);
             return "redirect:/home";
         }
-        User user = userService.getUser(authentication.getName());
-        fileService.uploadFile(multipartFile, user.getUserId());
+        fileService.uploadFile(multipartFile, userService.getAuthenticatedUsersId(authentication));
         return "redirect:/home";
     }
 }

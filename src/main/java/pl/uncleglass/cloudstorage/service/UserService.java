@@ -1,5 +1,6 @@
 package pl.uncleglass.cloudstorage.service;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import pl.uncleglass.cloudstorage.mapper.UserMapper;
 import pl.uncleglass.cloudstorage.model.User;
@@ -32,5 +33,9 @@ public class UserService {
 
     public User getUser(String username) {
         return userMapper.getUser(username);
+    }
+
+    public int getAuthenticatedUsersId(Authentication authentication) {
+        return getUser(authentication.getName()).getUserId();
     }
 }
