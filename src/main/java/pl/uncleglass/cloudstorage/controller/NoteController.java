@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.uncleglass.cloudstorage.model.Note;
 import pl.uncleglass.cloudstorage.service.NoteService;
 import pl.uncleglass.cloudstorage.service.UserService;
@@ -20,9 +21,12 @@ public class NoteController {
     }
 
     @PostMapping
-    public String addNote(Note note, Authentication authentication) {
+    public String addNote(Note note,
+                          Authentication authentication,
+                          RedirectAttributes redirectAttributes) {
         note.setUserId(userService.getAuthenticatedUsersId(authentication));
         noteService.addNote(note);
+        redirectAttributes.addFlashAttribute("showNoteTab", true);
         return "redirect:/home";
     }
 }
