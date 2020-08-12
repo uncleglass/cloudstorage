@@ -173,7 +173,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="#" method="POST">
+                                <form action="#" th:action="@{/credentials}" method="POST">
                                     <input type="hidden" name="credentialId" id="credential-id">
                                     <div class="form-group">
                                         <label for="note-title" class="col-form-label">URL</label>
@@ -233,10 +233,12 @@
 </script>
 <script th:inline="javascript">
     const note = [[${showNoteTab}]];
+    const cred = [[${showCredentialTab}]];
     window.onload = function() {
         if(note)
             $('#nav-notes-tab').tab('show');
-
+        else if(cred)
+            $('#nav-credentials-tab').tab('show');
     };
 </script>
 </body>
