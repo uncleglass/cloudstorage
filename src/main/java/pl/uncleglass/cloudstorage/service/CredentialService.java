@@ -40,4 +40,8 @@ public class CredentialService {
         Credential credential = credentialMapper.selectCredentialById(credentialId);
         return encryptionService.decryptValue(credential.getPassword(), credential.getKey());
     }
+
+    public void deleteCredential(int credentialId) {
+        credentialMapper.delete(credentialId);
+    }
 }

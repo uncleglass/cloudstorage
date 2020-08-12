@@ -37,4 +37,11 @@ public class CredentialController {
     public List<String> decryptPassword(@PathVariable Integer credentialId) {
         return Arrays.asList(credentialService.getDecryptedPassword(credentialId));
     }
+
+    @GetMapping("/delete/{credentialId}")
+    public String deleteCrednetial(@PathVariable Integer credentialId, RedirectAttributes redirectAttributes) {
+        credentialService.deleteCredential(credentialId);
+        redirectAttributes.addFlashAttribute("showCredentialTab", true);
+        return "redirect:/home";
+    }
 }

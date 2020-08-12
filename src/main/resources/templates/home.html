@@ -141,7 +141,7 @@
                 </button>
 
                 <div class="table-responsive">
-                    <table class="table table-striped" th:object="${credentials}" id="credentialTable">
+                    <table class="table table-striped" id="credentialTable">
                         <thead>
                         <tr>
                             <th style="width: 20%" scope="col"></th>
@@ -156,7 +156,7 @@
                                 <button th:onclick="javascript:showCredentialModal( [[${cred.credentialId}]],[[${cred.url}]],[[${cred.username}]],[[${cred.password}]] ); decryptPassword([[${cred.credentialId}]])"
                                         type="button" class="btn btn-success">Edit
                                 </button>
-                                <a class="btn btn-danger">Delete</a>
+                                <a th:href="*{'/credentials/delete/' + cred.credentialId}" class="btn btn-danger">Delete</a>
                             </td>
                             <th th:text="${cred.url}" scope="row">Example Credential URL</th>
                             <td th:text="${cred.username}">Example Credential Username</td>
