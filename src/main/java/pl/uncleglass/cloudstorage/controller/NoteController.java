@@ -2,6 +2,8 @@ package pl.uncleglass.cloudstorage.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -26,6 +28,13 @@ public class NoteController {
                           RedirectAttributes redirectAttributes) {
         note.setUserId(userService.getAuthenticatedUsersId(authentication));
         noteService.addNote(note);
+        redirectAttributes.addFlashAttribute("showNoteTab", true);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/delete/{noteId}")
+    public String deleteNot(@PathVariable Integer noteId, RedirectAttributes redirectAttributes) {
+        noteService.deleteNote(noteId);
         redirectAttributes.addFlashAttribute("showNoteTab", true);
         return "redirect:/home";
     }
