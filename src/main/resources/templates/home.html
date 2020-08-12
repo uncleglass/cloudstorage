@@ -44,6 +44,9 @@
                 <div th:if="${fileUploadEmpty}" class="alert alert-info">
                     You have not selected a file or your file is empty. Please select a file.
                 </div>
+                <div th:if="${fileNameOccupied}" class="alert alert-info">
+                    You cannot upload two files with the same name.
+                </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="fileTable">
                         <thead>

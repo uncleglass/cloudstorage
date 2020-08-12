@@ -54,4 +54,8 @@ public class FileService {
     public void deleteFile(int fileId) {
         fileMapper.delete(fileId);
     }
+
+    public boolean isNameOccupied(String originalFilename) {
+        return fileMapper.selectByName(originalFilename) != null;
+    }
 }

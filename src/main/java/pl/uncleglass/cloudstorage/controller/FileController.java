@@ -55,6 +55,10 @@ public class FileController {
             redirectAttributes.addFlashAttribute("fileUploadEmpty", true);
             return "redirect:/home";
         }
+        if (fileService.isNameOccupied(multipartFile.getOriginalFilename())) {
+            redirectAttributes.addFlashAttribute("fileNameOccupied", true);
+            return "redirect:/home";
+        }
         fileService.uploadFile(multipartFile, userService.getAuthenticatedUsersId(authentication));
         return "redirect:/home";
     }
