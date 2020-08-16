@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.uncleglass.cloudstorage.model.File;
-import pl.uncleglass.cloudstorage.model.User;
 import pl.uncleglass.cloudstorage.service.FileService;
 import pl.uncleglass.cloudstorage.service.UserService;
 
