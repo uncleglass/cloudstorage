@@ -15,10 +15,7 @@ public class NoteService {
     }
 
     public int addNote(Note note) {
-        if (note.getNoteId() == null) {
-            return noteMapper.insert(note);
-        }
-        return noteMapper.update(note);
+        return noteMapper.insert(note);
     }
 
     public List<Note> getNotes(int usersId) {
@@ -27,5 +24,9 @@ public class NoteService {
 
     public void deleteNote(Integer noteId) {
         noteMapper.delete(noteId);
+    }
+
+    public int updateNote(Note note) {
+        return noteMapper.update(note);
     }
 }

@@ -27,7 +27,14 @@ public class NoteController {
                           Authentication authentication,
                           RedirectAttributes redirectAttributes) {
         note.setUserId(userService.getAuthenticatedUsersId(authentication));
-        noteService.addNote(note);
+        if (note.getNoteId() == null) {
+            redirectAttributes.addFlashAttribute("noteCreated", true);
+            noteService.addNote(note);
+        } else {
+            redirectAttributes.addFlashAttribute("noteUpdated", true);
+            noteService.updateNote(note);
+        }
+
         redirectAttributes.addFlashAttribute("showNoteTab", true);
         return "redirect:/home";
     }
@@ -36,6 +43,7 @@ public class NoteController {
     public String deleteNot(@PathVariable Integer noteId, RedirectAttributes redirectAttributes) {
         noteService.deleteNote(noteId);
         redirectAttributes.addFlashAttribute("showNoteTab", true);
+        redirectAttributes.addFlashAttribute("noteDeleted", true);
         return "redirect:/home";
     }
 }

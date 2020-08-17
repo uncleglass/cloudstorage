@@ -39,17 +39,22 @@ public class FileController {
     }
 
     @GetMapping("/delete/{fileId}")
-    public String deleteFile(@PathVariable Integer fileId, Authentication authentication) {
+    public String deleteFile(@PathVariable Integer fileId,
+                             Authentication authentication,
+                             RedirectAttributes redirectAttributes) {
         if (fileService.isDeletingAllowed(fileId, userService.getAuthenticatedUsersId(authentication))) {
             fileService.deleteFile(fileId);
+            redirectAttributes.addFlashAttribute("fileDeleted", true);
+            return "redirect:/home";
         }
+        redirectAttributes.addFlashAttribute("fileError", true);
         return "redirect:/home";
     }
 
     @PostMapping
     public String uploadFile(@RequestParam("fileUpload") MultipartFile multipartFile,
                              Authentication authentication,
-                             RedirectAttributes redirectAttributes) throws IOException {
+                             RedirectAttributes redirectAttributes) {
         if (multipartFile.isEmpty()) {
             redirectAttributes.addFlashAttribute("fileUploadEmpty", true);
             return "redirect:/home";
@@ -58,7 +63,13 @@ public class FileController {
             redirectAttributes.addFlashAttribute("fileNameOccupied", true);
             return "redirect:/home";
         }
-        fileService.uploadFile(multipartFile, userService.getAuthenticatedUsersId(authentication));
-        return "redirect:/home";
+        try {
+            fileService.uploadFile(multipartFile, userService.getAuthenticatedUsersId(authentication));
+            redirectAttributes.addFlashAttribute("fileUploaded", true);
+            return "redirect:/home";
+        } catch (IOException e) {
+            redirectAttributes.addFlashAttribute("fileError", true);
+            return "redirect:/home";
+        }
     }
 }

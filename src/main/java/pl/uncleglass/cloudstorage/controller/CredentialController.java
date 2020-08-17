@@ -27,6 +27,11 @@ public class CredentialController {
                                 Authentication authentication,
                                 RedirectAttributes redirectAttributes) {
         credential.setUserId(userService.getAuthenticatedUsersId(authentication));
+        if (credential.getCredentialId() == null) {
+            redirectAttributes.addFlashAttribute("credentialCreated", true);
+        } else {
+            redirectAttributes.addFlashAttribute("credentialUpdated", true);
+        }
         credentialService.addCredential(credential);
         redirectAttributes.addFlashAttribute("showCredentialTab", true);
         return "redirect:/home";
@@ -39,9 +44,10 @@ public class CredentialController {
     }
 
     @GetMapping("/delete/{credentialId}")
-    public String deleteCrednetial(@PathVariable Integer credentialId, RedirectAttributes redirectAttributes) {
+    public String deleteCredential(@PathVariable Integer credentialId, RedirectAttributes redirectAttributes) {
         credentialService.deleteCredential(credentialId);
         redirectAttributes.addFlashAttribute("showCredentialTab", true);
+        redirectAttributes.addFlashAttribute("credentialDeleted", true);
         return "redirect:/home";
     }
 }
